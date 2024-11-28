@@ -1,2 +1,2 @@
 # TC_CRM
-Together Culture CRM
+The CRM for Together Culture
