@@ -20,7 +20,28 @@ namespace TC_CRM
             LoadConversionData();
         }
 
-        
+        // Initialize sample dataset for conversion analytics
+        private void InitializeDataset()
+        {
+            conversionDataset = new DataSet();
+
+            DataTable conversionsTable = new DataTable("Conversions");
+            conversionsTable.Columns.Add("Date", typeof(DateTime));
+            conversionsTable.Columns.Add("Demographic", typeof(string));
+            conversionsTable.Columns.Add("PurchaseType", typeof(string));
+            conversionsTable.Columns.Add("OneOffPurchases", typeof(int));
+            conversionsTable.Columns.Add("Memberships", typeof(int));
+
+            // Add some sample data
+            conversionsTable.Rows.Add(new DateTime(2023, 1, 1), "Young Adults", "Event", 50, 5);
+            conversionsTable.Rows.Add(new DateTime(2023, 2, 1), "Young Adults", "Event", 60, 8);
+            conversionsTable.Rows.Add(new DateTime(2023, 3, 1), "Young Adults", "Subscription", 70, 15);
+            conversionsTable.Rows.Add(new DateTime(2023, 1, 1), "Middle Aged", "Event", 80, 12);
+            conversionsTable.Rows.Add(new DateTime(2023, 2, 1), "Middle Aged", "Subscription", 90, 20);
+            conversionsTable.Rows.Add(new DateTime(2023, 3, 1), "Middle Aged", "Event", 100, 25);
+
+            conversionDataset.Tables.Add(conversionsTable);
+        }
 
         // Initialize all UI components programmatically
         private void InitializeUI()
