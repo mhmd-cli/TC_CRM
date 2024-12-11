@@ -6,7 +6,13 @@ namespace TC_CRM
 {
     public partial class Online_Chat : Form
     {
-                public Online_Chat()
+        private ComboBox cbUserAccounts;
+        private TextBox txtMessageInput;
+        private Button btnSendMessage;
+        private ListBox lstChatDisplay;
+        private DataSet chatDataset;
+
+        public Online_Chat()
         {
             InitializeComponent();
             InitializeDataset();
