@@ -42,58 +42,7 @@ namespace TC_CRM
             benefitsDataset.Tables.Add(benefitsTable);
         }
 
-        // Initialize UI components programmatically
-        private void InitializeUI()
-        {
-            this.Text = "Membership Benefits Configuration";
-            this.Size = new System.Drawing.Size(800, 600);
-
-            // Initialize ComboBox for membership types
-            cbMembershipTypes = new ComboBox
-            {
-                Location = new System.Drawing.Point(20, 300),
-                Size = new System.Drawing.Size(200, 24)
-            };
-            cbMembershipTypes.Items.AddRange(new string[] { "Gold", "Silver", "Bronze" });
-            cbMembershipTypes.SelectedIndexChanged += CbMembershipTypes_SelectedIndexChanged;
-
-            // Initialize DataGridView for benefits
-            dgvBenefits = new DataGridView
-            {
-                Dock = DockStyle.Top,
-                Height = 300,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-            };
-
-            // Initialize Add, Remove, and Save buttons
-            btnAddBenefit = new Button
-            {
-                Text = "Add Benefit",
-                Location = new System.Drawing.Point(20, 350)
-            };
-            btnAddBenefit.Click += BtnAddBenefit_Click;
-
-            btnRemoveBenefit = new Button
-            {
-                Text = "Remove Benefit",
-                Location = new System.Drawing.Point(120, 350)
-            };
-            btnRemoveBenefit.Click += BtnRemoveBenefit_Click;
-
-            btnSaveChanges = new Button
-            {
-                Text = "Save Changes",
-                Location = new System.Drawing.Point(220, 350)
-            };
-            btnSaveChanges.Click += BtnSaveChanges_Click;
-
-            // Add controls to the form
-            this.Controls.Add(cbMembershipTypes);
-            this.Controls.Add(dgvBenefits);
-            this.Controls.Add(btnAddBenefit);
-            this.Controls.Add(btnRemoveBenefit);
-            this.Controls.Add(btnSaveChanges);
-        }
+        
 
         // Load and display benefits data based on selected membership type
         private void LoadBenefitsData()
