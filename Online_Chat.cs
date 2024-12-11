@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TC_CRM
 {
@@ -40,6 +34,8 @@ namespace TC_CRM
             chatTable.Rows.Add(DateTime.Now.AddMinutes(-10), "User1", "Hello, everyone!");
             chatTable.Rows.Add(DateTime.Now.AddMinutes(-5), "User2", "Hi, User1! How's it going?");
             chatTable.Rows.Add(DateTime.Now, "User1", "I'm doing well, thanks! How about you?");
+            chatTable.Rows.Add(DateTime.Now.AddMinutes(-3), "Mohamed", "Excited to be here!");
+            chatTable.Rows.Add(DateTime.Now.AddMinutes(-1), "Jamil", "Hi Mohamed, welcome!");
 
             chatDataset.Tables.Add(chatTable);
         }
@@ -56,7 +52,7 @@ namespace TC_CRM
                 Location = new System.Drawing.Point(20, 20),
                 Size = new System.Drawing.Size(200, 24)
             };
-            cbUserAccounts.Items.AddRange(new string[] { "User1", "User2", "User3" });
+            cbUserAccounts.Items.AddRange(new string[] { "User1", "User2", "User3", "Mohamed", "Jamil" });
             cbUserAccounts.SelectedIndex = 0; // Default to the first user account
 
             // Initialize ListBox for displaying chat messages
