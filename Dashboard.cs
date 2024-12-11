@@ -17,6 +17,7 @@ namespace TC_CRM
         private Button btnBack;
         private Button btnOpenDigitalContentModules;
         private Button btnConversionAnalytics;
+        private Button btnBenefitsConfiguration;
         private Label lblWelcome;
         private Label lblUserName;
         private Label lblBenefitsStatus;
@@ -114,6 +115,17 @@ namespace TC_CRM
 
             btnConversionAnalytics.Click += btnConversionAnalytics_Click;
 
+            // Initialize Button to Open Benefits Configuration Form
+            btnBenefitsConfiguration = new Button
+            {
+                Location = new System.Drawing.Point(520, 420), // Adjust position as needed
+                Name = "btnBenefitsConfiguration",
+                Size = new System.Drawing.Size(200, 23),
+                Text = "Benefits Configuration"
+            };
+
+            btnBenefitsConfiguration.Click += btnBenefitsConfiguration_Click;
+
             // Initialize Labels for Welcome Message and User Info
             lblWelcome = new Label
             {
@@ -141,6 +153,7 @@ namespace TC_CRM
             Controls.Add(btnBack);
             Controls.Add(btnOpenDigitalContentModules); // Add new button to the form
             Controls.Add(btnConversionAnalytics); // Add new button to the form
+            Controls.Add(btnBenefitsConfiguration); // Add new button to the form
             Controls.Add(lblWelcome);
             Controls.Add(lblUserName);
             Controls.Add(lblBenefitsStatus);
@@ -189,6 +202,13 @@ namespace TC_CRM
         {
             Conversion_Analytics conversionAnalyticsForm = new Conversion_Analytics();
             conversionAnalyticsForm.Show();
+        }
+
+        // Button click event to open Benefits Configuration form
+        private void btnBenefitsConfiguration_Click(object sender, EventArgs e)
+        {
+            BenefitsConfiguration benefitsConfigurationForm = new BenefitsConfiguration();
+            benefitsConfigurationForm.Show();
         }
 
         // Button click event to navigate back or to another form (optional)
