@@ -220,13 +220,6 @@ namespace TC_CRM
             conversionAnalyticsForm.Show();
         }
 
-        // Button click event to open Benefits Configuration form
-        private void btnBenefitsConfiguration_Click(object sender, EventArgs e)
-        {
-            BenefitsConfiguration benefitsConfigurationForm = new BenefitsConfiguration();
-            benefitsConfigurationForm.Show();
-        }
-
         // Button click event to open Online Chat form
         private void btnOnlineChat_Click(object sender, EventArgs e)
         {
