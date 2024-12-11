@@ -212,13 +212,13 @@ namespace TC_CRM
             Digital_Content_Modules digitalContentForm = new Digital_Content_Modules();
             digitalContentForm.Show();
         }
-        // Button click event to open Benefits Configuration form
-        private void btnBenefitsConfiguration_Click(object sender, EventArgs e)
-        {
-            BenefitsConfiguration benefitsConfigurationForm = new BenefitsConfiguration();
-            benefitsConfigurationForm.Show();
-        }
 
+        // Button click event to open Conversion Analytics form
+        private void btnConversionAnalytics_Click(object sender, EventArgs e)
+        {
+            Conversion_Analytics conversionAnalyticsForm = new Conversion_Analytics();
+            conversionAnalyticsForm.Show();
+        }
         // Button click event to open Online Chat form
         private void btnOnlineChat_Click(object sender, EventArgs e)
         {
