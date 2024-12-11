@@ -191,20 +191,6 @@ namespace TC_CRM
             return activeBenefitsCount;
         }
 
-        // Handle cell click event for the "Details" button
-        private void dataGridViewBenefits_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == dataGridViewBenefits.Columns["DetailsButton"].Index && e.RowIndex >= 0)
-            {
-                DataGridViewRow row = dataGridViewBenefits.Rows[e.RowIndex];
-                string benefitName = row.Cells["BenefitName"].Value.ToString();
-                string description = row.Cells["Description"].Value.ToString();
-                string status = row.Cells["Status"].Value.ToString();
-
-                // Show a message box with the benefit details
-                MessageBox.Show($"Benefit: {benefitName}\nDescription: {description}\nStatus: {status}", "Benefit Details");
-            }
-        }
 
         // Button click event to open Digital Content Modules form
         private void btnOpenDigitalContentModules_Click(object sender, EventArgs e)
