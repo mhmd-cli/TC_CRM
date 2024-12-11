@@ -205,6 +205,14 @@ namespace TC_CRM
                 MessageBox.Show($"Benefit: {benefitName}\nDescription: {description}\nStatus: {status}", "Benefit Details");
             }
         }
+
+        // Button click event to open Digital Content Modules form
+        private void btnOpenDigitalContentModules_Click(object sender, EventArgs e)
+        {
+            Digital_Content_Modules digitalContentForm = new Digital_Content_Modules();
+            digitalContentForm.Show();
+        }
+
         // Button click event to open Conversion Analytics form
         private void btnConversionAnalytics_Click(object sender, EventArgs e)
         {
