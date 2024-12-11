@@ -20,7 +20,25 @@ namespace TC_CRM
             LoadChatData();
         }
 
-        
+        // Initialize the dataset with sample data
+        private void InitializeDataset()
+        {
+            chatDataset = new DataSet();
+
+            DataTable chatTable = new DataTable("ChatMessages");
+            chatTable.Columns.Add("Timestamp", typeof(DateTime));
+            chatTable.Columns.Add("Username", typeof(string));
+            chatTable.Columns.Add("Message", typeof(string));
+
+            // Add some sample data
+            chatTable.Rows.Add(DateTime.Now.AddMinutes(-10), "User1", "Hello, everyone!");
+            chatTable.Rows.Add(DateTime.Now.AddMinutes(-5), "User2", "Hi, User1! How's it going?");
+            chatTable.Rows.Add(DateTime.Now, "User1", "I'm doing well, thanks! How about you?");
+            chatTable.Rows.Add(DateTime.Now.AddMinutes(-3), "Mohamed", "Excited to be here!");
+            chatTable.Rows.Add(DateTime.Now.AddMinutes(-1), "Jamil", "Hi Mohamed, welcome!");
+
+            chatDataset.Tables.Add(chatTable);
+        }
 
         // Initialize UI components programmatically
         private void InitializeUI()
