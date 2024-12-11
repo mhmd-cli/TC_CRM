@@ -30,6 +30,21 @@ namespace TC_CRM
             PopulateModulesDataGridView();
         }
 
+        // Initialize the dataset and populate it with sample digital content module data
+        private void InitializeDataset()
+        {
+            DataTable modulesTable = new DataTable("Modules");
+            modulesTable.Columns.Add("ModuleName", typeof(string));
+            modulesTable.Columns.Add("Description", typeof(string));
+            modulesTable.Columns.Add("Available", typeof(bool)); // True if module can be booked
+
+            // Add some sample data
+            modulesTable.Rows.Add("Intro to Culture", "An introductory course to cultural awareness.", true);
+            modulesTable.Rows.Add("Advanced Leadership", "Learn advanced leadership skills for team management.", true);
+            modulesTable.Rows.Add("Community Building", "Focuses on building stronger communities.", false); // Example of a module that can't be booked
+
+            ModulesDataset.Tables.Add(modulesTable);
+        }
 
         // Initialize all UI components programmatically
         private void InitializeUI()
