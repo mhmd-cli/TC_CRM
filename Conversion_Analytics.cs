@@ -118,21 +118,7 @@ namespace TC_CRM
             }
         }
 
-        // Export report button click event
-        private void BtnExport_Click(object sender, EventArgs e)
-        {
-            // Implement export functionality here (e.g., export to CSV or Excel)
-            SaveFileDialog saveFileDialog = new SaveFileDialog
-            {
-                Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*",
-                FileName = "ConversionAnalyticsReport.csv"
-            };
-
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                ExportToCsv(saveFileDialog.FileName);
-            }
-        }
+        
 
         // Export DataTable to CSV
         private void ExportToCsv(string filePath)
