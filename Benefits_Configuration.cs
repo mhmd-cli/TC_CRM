@@ -116,6 +116,28 @@ namespace TC_CRM
             LoadBenefitsData();
         }
 
+        // Event handler for Add Benefit button click
+        private void BtnAddBenefit_Click(object sender, EventArgs e)
+        {
+            if (cbMembershipTypes.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a membership type.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string membershipType = cbMembershipTypes.SelectedItem.ToString();
+            string benefitName = Prompt.ShowDialog("Enter Benefit Name:", "Add Benefit");
+            string description = Prompt.ShowDialog("Enter Benefit Description:", "Add Benefit");
+
+            if (string.IsNullOrEmpty(benefitName) || string.IsNullOrEmpty(description))
+            {
+                MessageBox.Show("Benefit name and description cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            benefitsDataset.Tables["Benefits"].Rows.Add(membershipType, benefitName, description);
+            LoadBenefitsData();
+        }
 
         // Event handler for Remove Benefit button click
         private void BtnRemoveBenefit_Click(object sender, EventArgs e)
