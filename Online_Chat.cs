@@ -85,7 +85,20 @@ namespace TC_CRM
             this.Controls.Add(btnSendMessage);
         }
 
-        
+        // Load and display chat messages
+        private void LoadChatData()
+        {
+            DataTable chatTable = chatDataset.Tables["ChatMessages"];
+
+            foreach (DataRow row in chatTable.Rows)
+            {
+                string timestamp = ((DateTime)row["Timestamp"]).ToString("g");
+                string username = row["Username"].ToString();
+                string message = row["Message"].ToString();
+
+                lstChatDisplay.Items.Add($"[{timestamp}] {username}: {message}");
+            }
+        }
 
         // Event handler for Send button click
         private void BtnSendMessage_Click(object sender, EventArgs e)
