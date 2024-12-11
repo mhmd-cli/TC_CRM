@@ -139,28 +139,7 @@ namespace TC_CRM
             dataGridViewModules.DataSource = modulesTable;
         }
 
-        // Handle cell click event for the "Book" button
-        private void dataGridViewModules_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == dataGridViewModules.Columns["BookButton"].Index && e.RowIndex >= 0)
-            {
-                DataGridViewRow row = dataGridViewModules.Rows[e.RowIndex];
-                string moduleName = row.Cells["ModuleName"].Value.ToString();
-                bool isAvailable = Convert.ToBoolean(row.Cells["Available"].Value);
-
-                if (isAvailable)
-                {
-                    // Confirm booking and change the module's status
-                    MessageBox.Show($"Module '{moduleName}' has been successfully booked!", "Booking Confirmation");
-                    row.Cells["Available"].Value = false; // Mark as booked
-                    lblStatus.Text = "Status: Module has been booked";
-                }
-                else
-                {
-                    MessageBox.Show("This module is not available for booking.", "Booking Error");
-                }
-            }
-        }
+        
 
         // Button click event to book the selected module
         private void btnBook_Click(object sender, EventArgs e)
