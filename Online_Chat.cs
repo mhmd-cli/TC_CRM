@@ -12,7 +12,13 @@ namespace TC_CRM
         private ListBox lstChatDisplay;
         private DataSet chatDataset;
 
-        
+        public Online_Chat()
+        {
+            InitializeComponent();
+            InitializeDataset();
+            InitializeUI();
+            LoadChatData();
+        }
 
         // Initialize the dataset with sample data
         private void InitializeDataset()
