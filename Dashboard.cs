@@ -15,6 +15,7 @@ namespace TC_CRM
     {
         private DataGridView dataGridViewBenefits;
         private Button btnBack;
+        private Button btnOpenDigitalContentModules; // New button
         private Label lblWelcome;
         private Label lblUserName;
         private Label lblBenefitsStatus;
@@ -90,6 +91,17 @@ namespace TC_CRM
 
             btnBack.Click += btnBack_Click;
 
+            // Initialize Button to Open Digital Content Modules Form
+            btnOpenDigitalContentModules = new Button
+            {
+                Location = new System.Drawing.Point(100, 420), // Adjust position as needed
+                Name = "btnOpenDigitalContentModules",
+                Size = new System.Drawing.Size(200, 23),
+                Text = "Open Digital Content Modules"
+            };
+
+            btnOpenDigitalContentModules.Click += btnOpenDigitalContentModules_Click;
+
             // Initialize Labels for Welcome Message and User Info
             lblWelcome = new Label
             {
@@ -109,12 +121,13 @@ namespace TC_CRM
             {
                 Location = new System.Drawing.Point(12, 70),
                 Size = new System.Drawing.Size(300, 20),
-                Text = "Your Active Benefits: " + (GetActiveBenefitsCount()+1)
+                Text = "Your Active Benefits: " + GetActiveBenefitsCount()
             };
 
             // Add controls to the form
             Controls.Add(dataGridViewBenefits);
             Controls.Add(btnBack);
+            Controls.Add(btnOpenDigitalContentModules); // Add new button to the form
             Controls.Add(lblWelcome);
             Controls.Add(lblUserName);
             Controls.Add(lblBenefitsStatus);
@@ -149,6 +162,13 @@ namespace TC_CRM
                 // Show a message box with the benefit details
                 MessageBox.Show($"Benefit: {benefitName}\nDescription: {description}\nStatus: {status}", "Benefit Details");
             }
+        }
+
+        // Button click event to open Digital Content Modules form
+        private void btnOpenDigitalContentModules_Click(object sender, EventArgs e)
+        {
+            Digital_Content_Modules digitalContentForm = new Digital_Content_Modules();
+            digitalContentForm.Show();
         }
 
         // Button click event to navigate back or to another form (optional)
