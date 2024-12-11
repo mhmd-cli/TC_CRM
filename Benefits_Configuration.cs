@@ -22,7 +22,25 @@ namespace TC_CRM
             LoadBenefitsData();
         }
 
+        // Initialize the dataset with sample data
+        private void InitializeDataset()
+        {
+            benefitsDataset = new DataSet();
 
+            DataTable benefitsTable = new DataTable("Benefits");
+            benefitsTable.Columns.Add("MembershipType", typeof(string));
+            benefitsTable.Columns.Add("BenefitName", typeof(string));
+            benefitsTable.Columns.Add("Description", typeof(string));
+
+            // Add some sample data
+            benefitsTable.Rows.Add("Gold", "Priority Support", "Access to priority customer support.");
+            benefitsTable.Rows.Add("Gold", "Free Workshops", "Access to exclusive workshops.");
+            benefitsTable.Rows.Add("Silver", "Discounted Membership", "Get a discount on membership renewal.");
+            benefitsTable.Rows.Add("Silver", "Online Resources", "Access to premium online resources.");
+            benefitsTable.Rows.Add("Bronze", "Newsletter", "Receive our monthly newsletter.");
+
+            benefitsDataset.Tables.Add(benefitsTable);
+        }
 
         // Initialize UI components programmatically
         private void InitializeUI()
