@@ -25,15 +25,6 @@ namespace TC_CRM
 
         // Sample DataSet
         public static DataSet DashboardDataset = new DataSet();
-
-        public Dashboard()
-        {
-            InitializeComponent();
-            InitializeDataset();
-            InitializeUI();
-            PopulateBenefitsDataGridView();
-        }
-
         // Initialize the dataset and populate it with sample benefit data
         private void InitializeDataset()
         {
