@@ -12,14 +12,7 @@ namespace TC_CRM
 {
     public partial class Digital_Content_Modules : Form
     {
-        private DataGridView dataGridViewModules;
-        private Button btnBack;
-        private Button btnBook;
-        private Label lblModulesTitle;
-        private Label lblModulesDescription;
-        private Label lblStatus;
-
-        // Sample DataSet for digital content modules
+            // Sample DataSet for digital content modules
         public static DataSet ModulesDataset = new DataSet();
 
         public Digital_Content_Modules()
