@@ -8,7 +8,11 @@ namespace TC_CRM
 {
     public partial class Conversion_Analytics : Form
     {
-                public Conversion_Analytics()
+        private DataGridView dgvConversionData;
+        private Button btnExport;
+        private DataSet conversionDataset;
+
+        public Conversion_Analytics()
         {
             InitializeComponent();
             InitializeDataset();
