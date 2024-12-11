@@ -156,21 +156,6 @@ namespace TC_CRM
             MessageBox.Show("Selected benefit(s) removed successfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        // Event handler for Save Changes button click
-        private void BtnSaveChanges_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // Validate and save changes to the dataset
-                Validate();
-                dgvBenefits.EndEdit();
-                MessageBox.Show("Changes saved successfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error saving changes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
     }
 
     // Utility class for input dialog
