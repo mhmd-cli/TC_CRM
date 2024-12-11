@@ -6,15 +6,7 @@ using System.Windows.Forms;
 namespace TC_CRM
 {
     public partial class BenefitsConfiguration : Form
-    {
-        private DataGridView dgvBenefits;
-        private ComboBox cbMembershipTypes;
-        private Button btnAddBenefit;
-        private Button btnRemoveBenefit;
-        private Button btnSaveChanges;
-        private DataSet benefitsDataset;
-
-        public BenefitsConfiguration()
+            public BenefitsConfiguration()
         {
             InitializeComponent();
             InitializeDataset();
