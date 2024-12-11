@@ -100,28 +100,6 @@ namespace TC_CRM
             }
         }
 
-        // Event handler for Send button click
-        private void BtnSendMessage_Click(object sender, EventArgs e)
-        {
-            string message = txtMessageInput.Text.Trim();
-
-            if (string.IsNullOrEmpty(message))
-            {
-                MessageBox.Show("Message cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            string username = cbUserAccounts.SelectedItem.ToString();
-            DateTime timestamp = DateTime.Now;
-
-            // Add message to dataset
-            chatDataset.Tables["ChatMessages"].Rows.Add(timestamp, username, message);
-
-            // Display message in ListBox
-            lstChatDisplay.Items.Add($"[{timestamp:g}] {username}: {message}");
-
-            // Clear input
-            txtMessageInput.Clear();
-        }
+        
     }
 }
