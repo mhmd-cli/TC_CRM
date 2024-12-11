@@ -139,22 +139,7 @@ namespace TC_CRM
             LoadBenefitsData();
         }
 
-        // Event handler for Remove Benefit button click
-        private void BtnRemoveBenefit_Click(object sender, EventArgs e)
-        {
-            if (dgvBenefits.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Please select a benefit to remove.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
-            foreach (DataGridViewRow row in dgvBenefits.SelectedRows)
-            {
-                dgvBenefits.Rows.Remove(row);
-            }
-
-            MessageBox.Show("Selected benefit(s) removed successfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
 
         // Event handler for Save Changes button click
         private void BtnSaveChanges_Click(object sender, EventArgs e)
