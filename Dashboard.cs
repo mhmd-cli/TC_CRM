@@ -100,7 +100,7 @@ namespace TC_CRM
             // Initialize Button to Open Digital Content Modules Form
             btnOpenDigitalContentModules = new Button
             {
-                Location = new System.Drawing.Point(100, 420), // Adjust position as needed
+                Location = new System.Drawing.Point(100, 420),
                 Name = "btnOpenDigitalContentModules",
                 Size = new System.Drawing.Size(150, 23),
                 Text = "Digital Content Modules"
@@ -111,7 +111,7 @@ namespace TC_CRM
             // Initialize Button to Open Conversion Analytics Form
             btnConversionAnalytics = new Button
             {
-                Location = new System.Drawing.Point(260, 420), // Adjust position as needed
+                Location = new System.Drawing.Point(260, 420),
                 Name = "btnConversionAnalytics",
                 Size = new System.Drawing.Size(150, 23),
                 Text = "Conversion Analytics"
@@ -122,7 +122,7 @@ namespace TC_CRM
             // Initialize Button to Open Benefits Configuration Form
             btnBenefitsConfiguration = new Button
             {
-                Location = new System.Drawing.Point(420, 420), // Adjust position as needed
+                Location = new System.Drawing.Point(420, 420), 
                 Name = "btnBenefitsConfiguration",
                 Size = new System.Drawing.Size(150, 23),
                 Text = "Benefits Configuration"
@@ -133,7 +133,7 @@ namespace TC_CRM
             // Initialize Button to Open Online Chat Form
             btnOnlineChat = new Button
             {
-                Location = new System.Drawing.Point(580, 420), // Adjust position as needed
+                Location = new System.Drawing.Point(580, 420),
                 Name = "btnOnlineChat",
                 Size = new System.Drawing.Size(100, 23),
                 Text = "Online Chat"
