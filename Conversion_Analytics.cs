@@ -12,7 +12,13 @@ namespace TC_CRM
         private Button btnExport;
         private DataSet conversionDataset;
 
-        
+        public Conversion_Analytics()
+        {
+            InitializeComponent();
+            InitializeDataset();
+            InitializeUI();
+            LoadConversionData();
+        }
 
         // Initialize sample dataset for conversion analytics
         private void InitializeDataset()
