@@ -181,6 +181,16 @@ namespace TC_CRM
             DataTable benefitsTable = DashboardDataset.Tables["Benefits"];
             dataGridViewBenefits.DataSource = benefitsTable;
         }
+
+        // Method to count active benefits
+        private int GetActiveBenefitsCount()
+        {
+            DataTable benefitsTable = DashboardDataset.Tables["Benefits"];
+            int activeBenefitsCount = benefitsTable.AsEnumerable()
+                                                    .Count(row => row.Field<string>("Status") == "Active");
+            return activeBenefitsCount;
+        }
+
         // Handle cell click event for the "Details" button
         private void dataGridViewBenefits_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
