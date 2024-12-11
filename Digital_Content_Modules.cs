@@ -22,7 +22,13 @@ namespace TC_CRM
         // Sample DataSet for digital content modules
         public static DataSet ModulesDataset = new DataSet();
 
-    
+        public Digital_Content_Modules()
+        {
+            InitializeComponent();
+            InitializeDataset();
+            InitializeUI();
+            PopulateModulesDataGridView();
+        }
 
         // Initialize the dataset and populate it with sample digital content module data
         private void InitializeDataset()
