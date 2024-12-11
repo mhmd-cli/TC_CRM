@@ -226,14 +226,6 @@ namespace TC_CRM
             BenefitsConfiguration benefitsConfigurationForm = new BenefitsConfiguration();
             benefitsConfigurationForm.Show();
         }
-
-        // Button click event to open Online Chat form
-        private void btnOnlineChat_Click(object sender, EventArgs e)
-        {
-            Online_Chat onlineChatForm = new Online_Chat();
-            onlineChatForm.Show();
-        }
-
         // Button click event to navigate back or to another form (optional)
         private void btnBack_Click(object sender, EventArgs e)
         {
