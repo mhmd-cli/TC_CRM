@@ -43,7 +43,34 @@ namespace TC_CRM
             conversionDataset.Tables.Add(conversionsTable);
         }
 
-        
+        // Initialize all UI components programmatically
+        private void InitializeUI()
+        {
+            this.Text = "Conversion Analytics";
+            this.Size = new System.Drawing.Size(800, 600);
+            this.Paint += new PaintEventHandler(OnPaint);
+
+            // Initialize DataGridView for demographic and purchase type sorting
+            dgvConversionData = new DataGridView
+            {
+                Dock = DockStyle.Fill,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+            };
+
+            // Initialize Export button
+            btnExport = new Button
+            {
+                Text = "Export Report",
+                Dock = DockStyle.Bottom,
+                Height = 30
+            };
+
+            btnExport.Click += BtnExport_Click;
+
+            // Add controls to the form
+            this.Controls.Add(dgvConversionData);
+            this.Controls.Add(btnExport);
+        }
 
         // Load and process data for conversion rates
         private void LoadConversionData()
