@@ -132,12 +132,7 @@ namespace TC_CRM
             Controls.Add(lblStatus);
         }
 
-        // Populate the DataGridView with modules data from the dataset
-        private void PopulateModulesDataGridView()
-        {
-            DataTable modulesTable = ModulesDataset.Tables["Modules"];
-            dataGridViewModules.DataSource = modulesTable;
-        }
+        
 
         // Handle cell click event for the "Book" button
         private void dataGridViewModules_CellContentClick(object sender, DataGridViewCellEventArgs e)
