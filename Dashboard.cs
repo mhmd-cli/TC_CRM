@@ -174,14 +174,6 @@ namespace TC_CRM
             Controls.Add(lblUserName);
             Controls.Add(lblBenefitsStatus);
         }
-
-        // Populate the DataGridView with benefits data from the dataset
-        private void PopulateBenefitsDataGridView()
-        {
-            DataTable benefitsTable = DashboardDataset.Tables["Benefits"];
-            dataGridViewBenefits.DataSource = benefitsTable;
-        }
-
         // Method to count active benefits
         private int GetActiveBenefitsCount()
         {
