@@ -13,15 +13,6 @@ namespace TC_CRM
         private Button btnRemoveBenefit;
         private Button btnSaveChanges;
         private DataSet benefitsDataset;
-
-        public BenefitsConfiguration()
-        {
-            InitializeComponent();
-            InitializeDataset();
-            InitializeUI();
-            LoadBenefitsData();
-        }
-
         // Initialize the dataset with sample data
         private void InitializeDataset()
         {
