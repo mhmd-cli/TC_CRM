@@ -81,42 +81,7 @@ namespace TC_CRM
             dgvConversionData.DataSource = conversionsTable;
         }
 
-        // Handle Paint event to draw the chart
-        private void OnPaint(object sender, PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-            DataTable conversionsTable = conversionDataset.Tables["Conversions"];
-
-            if (conversionsTable.Rows.Count == 0) return;
-
-            var dates = conversionsTable.AsEnumerable().Select(r => r.Field<DateTime>("Date")).ToArray();
-            var conversionRates = conversionsTable.AsEnumerable()
-                                                  .Select(r => (double)r.Field<int>("Memberships") / r.Field<int>("OneOffPurchases") * 100)
-                                                  .ToArray();
-
-            // Define chart area
-            Rectangle chartArea = new Rectangle(50, 50, 700, 200);
-
-            // Draw chart axes
-            g.DrawRectangle(Pens.Black, chartArea);
-
-            // Draw conversion rates as line chart
-            for (int i = 1; i < conversionRates.Length; i++)
-            {
-                g.DrawLine(Pens.Blue,
-                    new PointF(chartArea.Left + (i - 1) * (chartArea.Width / (conversionRates.Length - 1)), chartArea.Bottom - (float)conversionRates[i - 1]),
-                    new PointF(chartArea.Left + i * (chartArea.Width / (conversionRates.Length - 1)), chartArea.Bottom - (float)conversionRates[i]));
-            }
-
-            // Draw data points
-            for (int i = 0; i < conversionRates.Length; i++)
-            {
-                g.FillEllipse(Brushes.Red,
-                    chartArea.Left + i * (chartArea.Width / (conversionRates.Length - 1)) - 2,
-                    chartArea.Bottom - (float)conversionRates[i] - 2,
-                    4, 4);
-            }
-        }
+        
 
         // Export report button click event
         private void BtnExport_Click(object sender, EventArgs e)
