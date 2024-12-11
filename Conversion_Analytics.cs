@@ -134,39 +134,6 @@ namespace TC_CRM
             }
         }
 
-        // Export DataTable to CSV
-        private void ExportToCsv(string filePath)
-        {
-            DataTable conversionsTable = conversionDataset.Tables["Conversions"];
-            using (System.IO.StreamWriter writer = new System.IO.StreamWriter(filePath))
-            {
-                // Write header
-                for (int i = 0; i < conversionsTable.Columns.Count; i++)
-                {
-                    writer.Write(conversionsTable.Columns[i]);
-                    if (i < conversionsTable.Columns.Count - 1)
-                    {
-                        writer.Write(",");
-                    }
-                }
-                writer.WriteLine();
-
-                // Write data
-                foreach (DataRow row in conversionsTable.Rows)
-                {
-                    for (int i = 0; i < conversionsTable.Columns.Count; i++)
-                    {
-                        writer.Write(row[i]);
-                        if (i < conversionsTable.Columns.Count - 1)
-                        {
-                            writer.Write(",");
-                        }
-                    }
-                    writer.WriteLine();
-                }
-            }
-
-            MessageBox.Show("Report exported successfully!", "Export Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
+        
     }
 }
