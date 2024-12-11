@@ -13,7 +13,17 @@ namespace TC_CRM
 {
     public partial class Dashboard : Form
     {
-            // Sample DataSet
+        private DataGridView dataGridViewBenefits;
+        private Button btnBack;
+        private Button btnOpenDigitalContentModules;
+        private Button btnConversionAnalytics;
+        private Button btnBenefitsConfiguration;
+        private Button btnOnlineChat;
+        private Label lblWelcome;
+        private Label lblUserName;
+        private Label lblBenefitsStatus;
+
+        // Sample DataSet
         public static DataSet DashboardDataset = new DataSet();
 
         public Dashboard()
