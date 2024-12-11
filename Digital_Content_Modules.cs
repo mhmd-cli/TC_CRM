@@ -19,10 +19,7 @@ namespace TC_CRM
         private Label lblModulesDescription;
         private Label lblStatus;
 
-        // Sample DataSet for digital content modules
-        public static DataSet ModulesDataset = new DataSet();
-
-        public Digital_Content_Modules()
+            public Digital_Content_Modules()
         {
             InitializeComponent();
             InitializeDataset();
