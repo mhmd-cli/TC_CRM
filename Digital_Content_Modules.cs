@@ -162,13 +162,7 @@ namespace TC_CRM
             }
         }
 
-        // Button click event to book the selected module
-        private void btnBook_Click(object sender, EventArgs e)
-        {
-            // This button click is primarily redundant due to in-cell booking.
-            // However, you can add further actions here if needed for your requirements.
-            MessageBox.Show("Select a module from the list to book", "Booking Information");
-        }
+        
 
         // Button click event to navigate back or to another form
         private void btnBack_Click(object sender, EventArgs e)
