@@ -95,20 +95,7 @@ namespace TC_CRM
             this.Controls.Add(btnSaveChanges);
         }
 
-        // Load and display benefits data based on selected membership type
-        private void LoadBenefitsData()
-        {
-            string selectedMembershipType = cbMembershipTypes.SelectedItem?.ToString();
-            if (!string.IsNullOrEmpty(selectedMembershipType))
-            {
-                DataTable benefitsTable = benefitsDataset.Tables["Benefits"];
-                var filteredBenefits = benefitsTable.AsEnumerable()
-                    .Where(row => row.Field<string>("MembershipType") == selectedMembershipType)
-                    .CopyToDataTable();
-
-                dgvBenefits.DataSource = filteredBenefits;
-            }
-        }
+        
 
         // Event handler for ComboBox selection change
         private void CbMembershipTypes_SelectedIndexChanged(object sender, EventArgs e)
