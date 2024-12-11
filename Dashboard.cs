@@ -19,13 +19,11 @@ namespace TC_CRM
         {
             InitializeComponent();
             LoadDashboard();
-            this.Text = "Dashboard";
+            // Welcome message + dashboard
+            this.Text = "Welcome to the application, this is your Dashboard";
         }
         private void LoadDashboard()
         {
-            // Set the title
-            this.Text = "Benefit Dashboard";
-
             // Create a DataGridView to display the benefits
             DataGridView dataGridView = new DataGridView
             {
