@@ -170,6 +170,11 @@ namespace TC_CRM
             MessageBox.Show("Select a module from the list to book", "Booking Information");
         }
 
-        
+        // Button click event to navigate back or to another form
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            // Close the current form (You can modify this for your navigation logic)
+            this.Close();
+        }
     }
 }
