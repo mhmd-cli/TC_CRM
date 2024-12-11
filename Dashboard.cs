@@ -34,22 +34,6 @@ namespace TC_CRM
             PopulateBenefitsDataGridView();
         }
 
-        // Initialize the dataset and populate it with sample benefit data
-        private void InitializeDataset()
-        {
-            DataTable benefitsTable = new DataTable("Benefits");
-            benefitsTable.Columns.Add("BenefitName", typeof(string));
-            benefitsTable.Columns.Add("Description", typeof(string));
-            benefitsTable.Columns.Add("Status", typeof(string)); // Active/Inactive
-
-            // Add some sample data
-            benefitsTable.Rows.Add("Free Workshop", "Access to exclusive workshops.", "Active");
-            benefitsTable.Rows.Add("Discounted Membership", "Get a discount on next year's membership.", "Inactive");
-            benefitsTable.Rows.Add("Priority Support", "Get priority support for your queries.", "Active");
-
-            DashboardDataset.Tables.Add(benefitsTable);
-        }
-
         // Initialize all UI components programmatically
         private void InitializeUI()
         {
