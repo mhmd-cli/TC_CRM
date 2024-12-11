@@ -72,6 +72,14 @@ namespace TC_CRM
             this.Controls.Add(btnExport);
         }
 
+        // Load and process data for conversion rates
+        private void LoadConversionData()
+        {
+            DataTable conversionsTable = conversionDataset.Tables["Conversions"];
+
+            // Bind DataTable to DataGridView
+            dgvConversionData.DataSource = conversionsTable;
+        }
 
         // Handle Paint event to draw the chart
         private void OnPaint(object sender, PaintEventArgs e)
