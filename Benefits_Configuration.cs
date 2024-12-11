@@ -110,7 +110,11 @@ namespace TC_CRM
             }
         }
 
-        
+        // Event handler for ComboBox selection change
+        private void CbMembershipTypes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadBenefitsData();
+        }
 
         // Event handler for Add Benefit button click
         private void BtnAddBenefit_Click(object sender, EventArgs e)
