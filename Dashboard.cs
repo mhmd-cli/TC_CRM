@@ -22,6 +22,10 @@ namespace TC_CRM
         private Label lblWelcome;
         private Label lblUserName;
         private Label lblBenefitsStatus;
+
+        // Sample DataSet
+        public static DataSet DashboardDataset = new DataSet();
+
         public Dashboard()
         {
             InitializeComponent();
