@@ -15,7 +15,8 @@ namespace TC_CRM
     {
         private DataGridView dataGridViewBenefits;
         private Button btnBack;
-        private Button btnOpenDigitalContentModules; // New button
+        private Button btnOpenDigitalContentModules;
+        private Button btnConversionAnalytics;
         private Label lblWelcome;
         private Label lblUserName;
         private Label lblBenefitsStatus;
@@ -102,6 +103,17 @@ namespace TC_CRM
 
             btnOpenDigitalContentModules.Click += btnOpenDigitalContentModules_Click;
 
+            // Initialize Button to Open Conversion Analytics Form
+            btnConversionAnalytics = new Button
+            {
+                Location = new System.Drawing.Point(300, 420), // Adjust position as needed
+                Name = "btnConversionAnalytics",
+                Size = new System.Drawing.Size(200, 23),
+                Text = "Conversion Analytics"
+            };
+
+            btnConversionAnalytics.Click += btnConversionAnalytics_Click;
+
             // Initialize Labels for Welcome Message and User Info
             lblWelcome = new Label
             {
@@ -128,6 +140,7 @@ namespace TC_CRM
             Controls.Add(dataGridViewBenefits);
             Controls.Add(btnBack);
             Controls.Add(btnOpenDigitalContentModules); // Add new button to the form
+            Controls.Add(btnConversionAnalytics); // Add new button to the form
             Controls.Add(lblWelcome);
             Controls.Add(lblUserName);
             Controls.Add(lblBenefitsStatus);
@@ -169,6 +182,13 @@ namespace TC_CRM
         {
             Digital_Content_Modules digitalContentForm = new Digital_Content_Modules();
             digitalContentForm.Show();
+        }
+
+        // Button click event to open Conversion Analytics form
+        private void btnConversionAnalytics_Click(object sender, EventArgs e)
+        {
+            Conversion_Analytics conversionAnalyticsForm = new Conversion_Analytics();
+            conversionAnalyticsForm.Show();
         }
 
         // Button click event to navigate back or to another form (optional)
