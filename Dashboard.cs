@@ -234,6 +234,11 @@ namespace TC_CRM
             onlineChatForm.Show();
         }
 
-        
+        // Button click event to navigate back or to another form (optional)
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            // Close the current form (You can modify this for your navigation logic)
+            this.Close();
+        }
     }
 }
