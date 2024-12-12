@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -19,31 +20,14 @@ namespace TC_CRM
         private Label lblModulesDescription;
         private Label lblStatus;
 
-        // Sample DataSet for digital content modules
-        public static DataSet ModulesDataset = new DataSet();
+        // MySQL Connection String
+        private string connectionString = "Server=localhost;Database=TC_CRM;Uid=root;Pwd=;";
 
         public Digital_Content_Modules()
         {
             InitializeComponent();
-            InitializeDataset();
             InitializeUI();
-            PopulateModulesDataGridView();
-        }
-
-        // Initialize the dataset and populate it with sample digital content module data
-        private void InitializeDataset()
-        {
-            DataTable modulesTable = new DataTable("Modules");
-            modulesTable.Columns.Add("ModuleName", typeof(string));
-            modulesTable.Columns.Add("Description", typeof(string));
-            modulesTable.Columns.Add("Available", typeof(bool)); // True if module can be booked
-
-            // Add some sample data
-            modulesTable.Rows.Add("Intro to Culture", "An introductory course to cultural awareness.", true);
-            modulesTable.Rows.Add("Advanced Leadership", "Learn advanced leadership skills for team management.", true);
-            modulesTable.Rows.Add("Community Building", "Focuses on building stronger communities.", false); // Example of a module that can't be booked
-
-            ModulesDataset.Tables.Add(modulesTable);
+            LoadModulesData();
         }
 
         // Initialize all UI components programmatically
@@ -132,11 +116,16 @@ namespace TC_CRM
             Controls.Add(lblStatus);
         }
 
-        // Populate the DataGridView with modules data from the dataset
-        private void PopulateModulesDataGridView()
+        // Load and display modules data from the database
+        private void LoadModulesData()
         {
-            DataTable modulesTable = ModulesDataset.Tables["Modules"];
-            dataGridViewModules.DataSource = modulesTable;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                MySqlDataAdapter adapter = new MySqlDataAdapter("SELECT * FROM Modules", conn);
+                DataTable modulesTable = new DataTable();
+                adapter.Fill(modulesTable);
+                dataGridViewModules.DataSource = modulesTable;
+            }
         }
 
         // Handle cell click event for the "Book" button
@@ -150,9 +139,20 @@ namespace TC_CRM
 
                 if (isAvailable)
                 {
-                    // Confirm booking and change the module's status
-                    MessageBox.Show($"Module '{moduleName}' has been successfully booked!", "Booking Confirmation");
+                    // Confirm booking and update the module's status in the database
+                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    {
+                        MySqlCommand cmd = new MySqlCommand(
+                            "UPDATE Modules SET Available = @Available WHERE ModuleName = @ModuleName", conn);
+                        cmd.Parameters.AddWithValue("@Available", false);
+                        cmd.Parameters.AddWithValue("@ModuleName", moduleName);
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Update DataGridView
                     row.Cells["Available"].Value = false; // Mark as booked
+                    MessageBox.Show($"Module '{moduleName}' has been successfully booked!", "Booking Confirmation");
                     lblStatus.Text = "Status: Module has been booked";
                 }
                 else

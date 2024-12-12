@@ -3,6 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace TC_CRM
 {
@@ -12,38 +13,17 @@ namespace TC_CRM
         private Button btnExport;
         private DataSet conversionDataset;
 
+        // MySQL Connection String
+        private string connectionString = "Server=localhost;Database=TC_CRM;Uid=root;Pwd=;";
+
         public Conversion_Analytics()
         {
             InitializeComponent();
-            InitializeDataset();
             InitializeUI();
             LoadConversionData();
         }
 
-        // Initialize sample dataset for conversion analytics
-        private void InitializeDataset()
-        {
-            conversionDataset = new DataSet();
-
-            DataTable conversionsTable = new DataTable("Conversions");
-            conversionsTable.Columns.Add("Date", typeof(DateTime));
-            conversionsTable.Columns.Add("Demographic", typeof(string));
-            conversionsTable.Columns.Add("PurchaseType", typeof(string));
-            conversionsTable.Columns.Add("OneOffPurchases", typeof(int));
-            conversionsTable.Columns.Add("Memberships", typeof(int));
-
-            // Add some sample data
-            conversionsTable.Rows.Add(new DateTime(2023, 1, 1), "Young Adults", "Event", 50, 5);
-            conversionsTable.Rows.Add(new DateTime(2023, 2, 1), "Young Adults", "Event", 60, 8);
-            conversionsTable.Rows.Add(new DateTime(2023, 3, 1), "Young Adults", "Subscription", 70, 15);
-            conversionsTable.Rows.Add(new DateTime(2023, 1, 1), "Middle Aged", "Event", 80, 12);
-            conversionsTable.Rows.Add(new DateTime(2023, 2, 1), "Middle Aged", "Subscription", 90, 20);
-            conversionsTable.Rows.Add(new DateTime(2023, 3, 1), "Middle Aged", "Event", 100, 25);
-
-            conversionDataset.Tables.Add(conversionsTable);
-        }
-
-        // Initialize all UI components programmatically
+        // Initialize UI components programmatically
         private void InitializeUI()
         {
             this.Text = "Conversion Analytics";
@@ -75,17 +55,23 @@ namespace TC_CRM
         // Load and process data for conversion rates
         private void LoadConversionData()
         {
-            DataTable conversionsTable = conversionDataset.Tables["Conversions"];
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                MySqlDataAdapter adapter = new MySqlDataAdapter("SELECT Date, Demographic, PurchaseType, OneOffPurchases, Memberships FROM Conversions", conn);
+                DataTable conversionsTable = new DataTable();
+                adapter.Fill(conversionsTable);
 
-            // Bind DataTable to DataGridView
-            dgvConversionData.DataSource = conversionsTable;
+                conversionDataset = new DataSet();
+                conversionDataset.Tables.Add(conversionsTable);
+                dgvConversionData.DataSource = conversionDataset.Tables[0];
+            }
         }
 
         // Handle Paint event to draw the chart
         private void OnPaint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            DataTable conversionsTable = conversionDataset.Tables["Conversions"];
+            DataTable conversionsTable = conversionDataset.Tables[0];
 
             if (conversionsTable.Rows.Count == 0) return;
 
@@ -137,7 +123,7 @@ namespace TC_CRM
         // Export DataTable to CSV
         private void ExportToCsv(string filePath)
         {
-            DataTable conversionsTable = conversionDataset.Tables["Conversions"];
+            DataTable conversionsTable = conversionDataset.Tables[0];
             using (System.IO.StreamWriter writer = new System.IO.StreamWriter(filePath))
             {
                 // Write header

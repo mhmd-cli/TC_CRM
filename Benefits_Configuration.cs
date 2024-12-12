@@ -2,6 +2,7 @@
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace TC_CRM
 {
@@ -12,34 +13,16 @@ namespace TC_CRM
         private Button btnAddBenefit;
         private Button btnRemoveBenefit;
         private Button btnSaveChanges;
-        private DataSet benefitsDataset;
+
+        // MySQL Connection String
+        private string connectionString = "Server=localhost;Database=TC_CRM;Uid=root;Pwd=;";
 
         public BenefitsConfiguration()
         {
             InitializeComponent();
-            InitializeDataset();
             InitializeUI();
+            LoadMembershipTypes();
             LoadBenefitsData();
-        }
-
-        // Initialize the dataset with sample data
-        private void InitializeDataset()
-        {
-            benefitsDataset = new DataSet();
-
-            DataTable benefitsTable = new DataTable("Benefits");
-            benefitsTable.Columns.Add("MembershipType", typeof(string));
-            benefitsTable.Columns.Add("BenefitName", typeof(string));
-            benefitsTable.Columns.Add("Description", typeof(string));
-
-            // Add some sample data
-            benefitsTable.Rows.Add("Gold", "Priority Support", "Access to priority customer support.");
-            benefitsTable.Rows.Add("Gold", "Free Workshops", "Access to exclusive workshops.");
-            benefitsTable.Rows.Add("Silver", "Discounted Membership", "Get a discount on membership renewal.");
-            benefitsTable.Rows.Add("Silver", "Online Resources", "Access to premium online resources.");
-            benefitsTable.Rows.Add("Bronze", "Newsletter", "Receive our monthly newsletter.");
-
-            benefitsDataset.Tables.Add(benefitsTable);
         }
 
         // Initialize UI components programmatically
@@ -54,7 +37,6 @@ namespace TC_CRM
                 Location = new System.Drawing.Point(20, 300),
                 Size = new System.Drawing.Size(200, 24)
             };
-            cbMembershipTypes.Items.AddRange(new string[] { "Gold", "Silver", "Bronze" });
             cbMembershipTypes.SelectedIndexChanged += CbMembershipTypes_SelectedIndexChanged;
 
             // Initialize DataGridView for benefits
@@ -95,18 +77,40 @@ namespace TC_CRM
             this.Controls.Add(btnSaveChanges);
         }
 
+        // Load membership types from the database into ComboBox
+        private void LoadMembershipTypes()
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT DISTINCT MembershipType FROM MembershipBenefits", conn);
+                conn.Open();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        cbMembershipTypes.Items.Add(reader.GetString("MembershipType"));
+                    }
+                }
+                cbMembershipTypes.SelectedIndex = 0; // Default to the first membership type
+            }
+        }
+
         // Load and display benefits data based on selected membership type
         private void LoadBenefitsData()
         {
             string selectedMembershipType = cbMembershipTypes.SelectedItem?.ToString();
             if (!string.IsNullOrEmpty(selectedMembershipType))
             {
-                DataTable benefitsTable = benefitsDataset.Tables["Benefits"];
-                var filteredBenefits = benefitsTable.AsEnumerable()
-                    .Where(row => row.Field<string>("MembershipType") == selectedMembershipType)
-                    .CopyToDataTable();
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(
+                        "SELECT BenefitName, Description FROM MembershipBenefits WHERE MembershipType = @MembershipType", conn);
+                    adapter.SelectCommand.Parameters.AddWithValue("@MembershipType", selectedMembershipType);
 
-                dgvBenefits.DataSource = filteredBenefits;
+                    DataTable benefitsTable = new DataTable();
+                    adapter.Fill(benefitsTable);
+                    dgvBenefits.DataSource = benefitsTable;
+                }
             }
         }
 
@@ -135,7 +139,18 @@ namespace TC_CRM
                 return;
             }
 
-            benefitsDataset.Tables["Benefits"].Rows.Add(membershipType, benefitName, description);
+            // Current issue with adding or changing a benefit: it can't add or change, except if the value already exists in the database.
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                MySqlCommand cmd = new MySqlCommand(
+                    "INSERT INTO MembershipBenefits (MembershipType, BenefitName, Description) VALUES (@MembershipType, @BenefitName, @Description)", conn);
+                cmd.Parameters.AddWithValue("@MembershipType", membershipType);
+                cmd.Parameters.AddWithValue("@BenefitName", benefitName);
+                cmd.Parameters.AddWithValue("@Description", description);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+
             LoadBenefitsData();
         }
 
@@ -150,6 +165,19 @@ namespace TC_CRM
 
             foreach (DataGridViewRow row in dgvBenefits.SelectedRows)
             {
+                string benefitName = row.Cells["BenefitName"].Value.ToString();
+                string membershipType = cbMembershipTypes.SelectedItem.ToString();
+
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand(
+                        "DELETE FROM MembershipBenefits WHERE MembershipType = @MembershipType AND BenefitName = @BenefitName", conn);
+                    cmd.Parameters.AddWithValue("@MembershipType", membershipType);
+                    cmd.Parameters.AddWithValue("@BenefitName", benefitName);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+
                 dgvBenefits.Rows.Remove(row);
             }
 

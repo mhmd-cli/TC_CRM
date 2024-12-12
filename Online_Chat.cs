@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace TC_CRM
 {
@@ -12,32 +13,15 @@ namespace TC_CRM
         private ListBox lstChatDisplay;
         private DataSet chatDataset;
 
+        // MySQL Connection String
+        private string connectionString = "Server=localhost;Database=TC_CRM;Uid=root;Pwd=;";
+
         public Online_Chat()
         {
             InitializeComponent();
-            InitializeDataset();
             InitializeUI();
+            LoadUserAccounts();
             LoadChatData();
-        }
-
-        // Initialize the dataset with sample data
-        private void InitializeDataset()
-        {
-            chatDataset = new DataSet();
-
-            DataTable chatTable = new DataTable("ChatMessages");
-            chatTable.Columns.Add("Timestamp", typeof(DateTime));
-            chatTable.Columns.Add("Username", typeof(string));
-            chatTable.Columns.Add("Message", typeof(string));
-
-            // Add some sample data
-            chatTable.Rows.Add(DateTime.Now.AddMinutes(-10), "User1", "Hello, everyone!");
-            chatTable.Rows.Add(DateTime.Now.AddMinutes(-5), "User2", "Hi, User1! How's it going?");
-            chatTable.Rows.Add(DateTime.Now, "User1", "I'm doing well, thanks! How about you?");
-            chatTable.Rows.Add(DateTime.Now.AddMinutes(-3), "Mohamed", "Excited to be here!");
-            chatTable.Rows.Add(DateTime.Now.AddMinutes(-1), "Jamil", "Hi Mohamed, welcome!");
-
-            chatDataset.Tables.Add(chatTable);
         }
 
         // Initialize UI components programmatically
@@ -52,8 +36,6 @@ namespace TC_CRM
                 Location = new System.Drawing.Point(20, 20),
                 Size = new System.Drawing.Size(200, 24)
             };
-            cbUserAccounts.Items.AddRange(new string[] { "User1", "User2", "User3", "Mohamed", "Jamil" });
-            cbUserAccounts.SelectedIndex = 0; // Default to the first user account
 
             // Initialize ListBox for displaying chat messages
             lstChatDisplay = new ListBox
@@ -85,18 +67,41 @@ namespace TC_CRM
             this.Controls.Add(btnSendMessage);
         }
 
-        // Load and display chat messages
+        // Load user accounts from the database into ComboBox
+        private void LoadUserAccounts()
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT username FROM Users", conn);
+                conn.Open();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        cbUserAccounts.Items.Add(reader.GetString("username"));
+                    }
+                }
+                cbUserAccounts.SelectedIndex = 0; // Default to the first user account
+            }
+        }
+
+        // Load and display chat messages from the database
         private void LoadChatData()
         {
-            DataTable chatTable = chatDataset.Tables["ChatMessages"];
-
-            foreach (DataRow row in chatTable.Rows)
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                string timestamp = ((DateTime)row["Timestamp"]).ToString("g");
-                string username = row["Username"].ToString();
-                string message = row["Message"].ToString();
+                MySqlDataAdapter adapter = new MySqlDataAdapter("SELECT Timestamp, Username, Message FROM ChatMessages", conn);
+                DataTable chatTable = new DataTable();
+                adapter.Fill(chatTable);
 
-                lstChatDisplay.Items.Add($"[{timestamp}] {username}: {message}");
+                foreach (DataRow row in chatTable.Rows)
+                {
+                    string timestamp = ((DateTime)row["Timestamp"]).ToString("g");
+                    string username = row["Username"].ToString();
+                    string message = row["Message"].ToString();
+
+                    lstChatDisplay.Items.Add($"[{timestamp}] {username}: {message}");
+                }
             }
         }
 
@@ -114,8 +119,16 @@ namespace TC_CRM
             string username = cbUserAccounts.SelectedItem.ToString();
             DateTime timestamp = DateTime.Now;
 
-            // Add message to dataset
-            chatDataset.Tables["ChatMessages"].Rows.Add(timestamp, username, message);
+            // Add message to database
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO ChatMessages (Timestamp, Username, Message) VALUES (@Timestamp, @Username, @Message)", conn);
+                cmd.Parameters.AddWithValue("@Timestamp", timestamp);
+                cmd.Parameters.AddWithValue("@Username", username);
+                cmd.Parameters.AddWithValue("@Message", message);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
 
             // Display message in ListBox
             lstChatDisplay.Items.Add($"[{timestamp:g}] {username}: {message}");

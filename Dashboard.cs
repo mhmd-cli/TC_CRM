@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace TC_CRM
 {
@@ -22,31 +23,15 @@ namespace TC_CRM
         private Label lblUserName;
         private Label lblBenefitsStatus;
 
-        // Sample DataSet
-        public static DataSet DashboardDataset = new DataSet();
+        // MySQL Connection String
+        private string connectionString = "Server=localhost;Database=TC_CRM;Uid=root;Pwd=;";
 
         public Dashboard()
         {
             InitializeComponent();
-            InitializeDataset();
             InitializeUI();
+            this.Text = "Dashboard";
             PopulateBenefitsDataGridView();
-        }
-
-        // Initialize the dataset and populate it with sample benefit data
-        private void InitializeDataset()
-        {
-            DataTable benefitsTable = new DataTable("Benefits");
-            benefitsTable.Columns.Add("BenefitName", typeof(string));
-            benefitsTable.Columns.Add("Description", typeof(string));
-            benefitsTable.Columns.Add("Status", typeof(string)); // Active/Inactive
-
-            // Add some sample data
-            benefitsTable.Rows.Add("Free Workshop", "Access to exclusive workshops.", "Active");
-            benefitsTable.Rows.Add("Discounted Membership", "Get a discount on next year's membership.", "Inactive");
-            benefitsTable.Rows.Add("Priority Support", "Get priority support for your queries.", "Active");
-
-            DashboardDataset.Tables.Add(benefitsTable);
         }
 
         // Initialize all UI components programmatically
@@ -121,7 +106,7 @@ namespace TC_CRM
             // Initialize Button to Open Benefits Configuration Form
             btnBenefitsConfiguration = new Button
             {
-                Location = new System.Drawing.Point(420, 420), 
+                Location = new System.Drawing.Point(420, 420),
                 Name = "btnBenefitsConfiguration",
                 Size = new System.Drawing.Size(150, 23),
                 Text = "Benefits Configuration"
@@ -151,8 +136,7 @@ namespace TC_CRM
             lblUserName = new Label
             {
                 Location = new System.Drawing.Point(12, 50),
-                Size = new System.Drawing.Size(300, 20),
-                Text = "User: Mohamed Abdelrahman"
+                Size = new System.Drawing.Size(300, 20)
             };
 
             lblBenefitsStatus = new Label
@@ -172,22 +156,43 @@ namespace TC_CRM
             Controls.Add(lblWelcome);
             Controls.Add(lblUserName);
             Controls.Add(lblBenefitsStatus);
+
+            // Set the username label text from database
+            SetUserName();
         }
 
-        // Populate the DataGridView with benefits data from the dataset
+        private void SetUserName()
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT username FROM Users WHERE uid = 1", conn); // Assuming you want to fetch user with uid 1
+                conn.Open();
+                lblUserName.Text = "User: " + cmd.ExecuteScalar().ToString();
+            }
+        }
+
+        // Populate the DataGridView with benefits data from the MySQL database
         private void PopulateBenefitsDataGridView()
         {
-            DataTable benefitsTable = DashboardDataset.Tables["Benefits"];
-            dataGridViewBenefits.DataSource = benefitsTable;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                MySqlDataAdapter adapter = new MySqlDataAdapter("SELECT * FROM Benefits", conn);
+                DataTable benefitsTable = new DataTable();
+                adapter.Fill(benefitsTable);
+                dataGridViewBenefits.DataSource = benefitsTable;
+            }
         }
 
         // Method to count active benefits
         private int GetActiveBenefitsCount()
         {
-            DataTable benefitsTable = DashboardDataset.Tables["Benefits"];
-            int activeBenefitsCount = benefitsTable.AsEnumerable()
-                                                    .Count(row => row.Field<string>("Status") == "Active");
-            return activeBenefitsCount;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM Benefits WHERE Status = 'Active'", conn);
+                conn.Open();
+                int activeBenefitsCount = Convert.ToInt32(cmd.ExecuteScalar());
+                return activeBenefitsCount+1;
+            }
         }
 
         // Handle cell click event for the "Details" button
@@ -229,10 +234,8 @@ namespace TC_CRM
         // Button click event to open Online Chat form
         private void btnOnlineChat_Click(object sender, EventArgs e)
         {
-            Online_Chat onlineChatForm = new Online_Chat();
-            onlineChatForm.Show();
+            Online_Chat onlineChatForm = new Online_Chat(); onlineChatForm.Show();
         }
-
         // Button click event to navigate back or to another form (optional)
         private void btnBack_Click(object sender, EventArgs e)
         {
